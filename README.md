@@ -24,14 +24,19 @@ so multiple operations can be chained together.
 Operations like `min`, `median` and `stdev` will not change the MathArray and
 return a value (or, in some cases, a new MathArray).
 
-Operations
-----------
+New operations
+--------------
 ## `abs()`
 Turn all negative numbers into positive numbers.
 
 Returns self.
 
-## `call(callback, argument)`
+## `add([amount = 1])`
+Add the specified amount to all items (default `1` if not specified).
+
+Returns self.
+
+## `call(callback[, argument])`
 Calls a `callback` function on each item, not changing it.
 
 Callback signature is `void function(item, index)`.
@@ -52,6 +57,11 @@ Creates an exact copy of the MathArray.
 
 Return a new MathArray object.
 
+## `divide([factor = 100])`
+Divide all items by the specified factor (default `100` if not specified).
+
+Returns self.
+
 ## `floor()`
 Round all numbers down to the nearest integer.
 
@@ -67,18 +77,6 @@ Returns the object as described above.
 
 ## `last()`
 Returns the last item in the array.
-
-## `map(callback, argument)`
-Calls a `callback` function on each item, creating a new MathArray with the
-values returned by the callback function.
-
-Callback signature is `number function(item, index)`.
-
-If `argument` is supplied, it will be passed to the callback as `this`.
-
-Returns new MathArray object.
-
-See `call()` and `walk()` for similar functions.
 
 ## `max()`
 Returns the greatest value in the array.
@@ -101,12 +99,12 @@ Returns an Array object containing the mode(s).
 
 Returns empty Array object if array is empty.
 
-## `multiply(factor)`
+## `multiply([factor = 100])`
 Multiply all items by the specified factor (default `100` if not specified).
 
 Returns self.
 
-## `randoms(count, min, max, round)`
+## `randoms([count[, min[, max[, round]]]])`
 Replaces all items with a number of random numbers.
 
 *	`count` Number of random numbers to generate (default `256`).
@@ -116,7 +114,7 @@ Replaces all items with a number of random numbers.
 
 Returns self.
 
-## `range(min, max, step)`
+## `range([min[, max[, step]]])`
 Replaces all items with a linear range of numbers, starting from `min` and 
 ending at or before `max`.
 
@@ -126,16 +124,6 @@ ending at or before `max`.
 
 Returns self.
 
-## `reduce(callback, initialValue)`
-Calls a `callback` function on each item, creating a new MathArray with the
-values returned by the callback function.
-
-Callback signature is `number function(previous, item, index, object)`.
-
-Initially, the value will be either 0 or the value set with `initialValue`.
-
-Returns the reduced value.
-
 ## `round()`
 Round all numbers up or down to the nearest integer, whichever is closest.
 
@@ -143,13 +131,18 @@ Values exactly in the middle (like 0.5) will be rounded up.
 
 Returns self.
 
-## `sort()`
-Sort the values numerically.
+## `sqrt()`
+Take the square root of every item.
 
 Returns self.
 
 ## `stddev()`
 Returns the population standard deviation.
+
+## `subtract([amount = 1])`
+Subtracts the specified amount to all items (default `1` if not specified).
+
+Returns self.
 
 ## `sum()`
 Returns the sum of all values.
@@ -157,7 +150,7 @@ Returns the sum of all values.
 ## `variance()`
 Returns the population variance.
 
-## `map(callback, argument)`
+## `walk(callback[, argument])`
 Calls a `callback` function on each item, replacing the item values with the
 values returned by the callback function.
 
@@ -168,6 +161,31 @@ If `argument` is supplied, it will be passed to the callback as `this`.
 Returns self.
 
 See `call()` and `map()` for similar functions.
+
+Array operations
+----------------
+The following operations are inherited from Array and are tested to work for the
+MathArray.
+
+*	`every(callback[, argument])`
+*	`indexOf(searchElement[, fromIndex = 0])`
+*	`join([separator = ','])`
+*	`reverse()`
+*	`pop()`
+*	`push(element1[, ..., elementN])`
+*	`shift()`
+*	`some(callback[, argument])`
+*	`toString()` Including automatic conversion.
+*	`unshift([element1[, ...[, elementN]]])`
+
+A number of Array methods have been overwritten to use and return MathArray
+objects instead of Array objects. These are otherwise identical.
+
+*	`map(callback[, argument])`
+*	`reduce(callback[, initialValue])`
+*	`slice(begin[, end])`
+*	`sort()` Sorts numerically.
+*	`splice(start, deleteCount[, item1[, item2[, ...]]])`
 
 Examples
 --------
@@ -191,9 +209,12 @@ Take a look at the include unittests for more examples.
 
 Future
 ------
-sqrt, pow, subtract, divide, mod
-sigma, stddev_sample, variance_sample, sigma_sample
-ceil(digits), floor(digits), round(digits)
-round(fractionals)
-roundin(digits), roundout(digits)
-aliasses
+*	Core Array methods: concat, filter, find, forEach,
+	lastIndexOf, reduceRight
+*	toArray()
+*	pow, mod
+*	sigma, stddev_sample, variance_sample, sigma_sample
+*	ceil(digits), floor(digits), round(digits)
+*	round(fractionals)
+*	roundin(digits), roundout(digits)
+*	Aliasses

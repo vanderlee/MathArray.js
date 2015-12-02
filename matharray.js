@@ -9,12 +9,32 @@
 function MathArray() {
 	"use strict";
 
-	var name,
+	var construct = (function() {
+			function F(args) {
+				return MathArray.apply(this, args);
+			}
+			F.prototype = MathArray.prototype;
+
+			return function(args) {
+				return new F(args);
+			}
+		})(),
+		name,
 		array = [],
 		functions = {
 			abs: function() {
 				this.walk(function(v) {
 					return Math.abs(v);
+				});
+
+				return this;
+			},
+
+			add: function(amount) {
+				amount = amount || 1;
+
+				this.walk(function(v) {
+					return v + amount;
 				});
 
 				return this;
@@ -58,6 +78,16 @@ function MathArray() {
 				}
 
 				return A;
+			},
+
+			divide: function(factor) {
+				factor = factor || 100;
+
+				this.walk(function(v) {
+					return v / factor;
+				});
+
+				return this;
 			},
 
 			floor: function() {
@@ -169,7 +199,7 @@ function MathArray() {
 
 				return this;
 			},
-
+		
 			randoms: function(count, min, max, round) {
 				var range,
 					value,
@@ -258,14 +288,40 @@ function MathArray() {
 				return this.walk(Math.round);
 			},
 
+			slice: function(begin, end) {
+				return construct(Array.prototype.slice.apply(this, arguments));
+			},
+
 			sort: function() {
 				return Array.prototype.sort.call(this, function(a, b) {
 					return a - b;
 				});
 			},
 
+			splice: function(start, deleteCount) {
+				return construct(Array.prototype.splice.apply(this, arguments));
+			},
+
+			sqrt: function() {
+				this.walk(function(v) {
+					return Math.sqrt(v);
+				});
+
+				return this;
+			},
+
 			stddev: function() {
 				return Math.sqrt(this.variance());
+			},
+
+			subtract: function(amount) {
+				amount = amount || 1;
+
+				this.walk(function(v) {
+					return v - amount;
+				});
+
+				return this;
 			},
 
 			sum: function() {

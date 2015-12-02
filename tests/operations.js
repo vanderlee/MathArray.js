@@ -14,6 +14,18 @@ test('abs', function(assert) {
 	assert.deepEqual((new MathArray(-1.23, 0, 1.23)).abs(), [1.23, 0, 1.23], 'Float');
 });
 
+test('add', function(assert) {
+	var m = new MathArray(-1, 0, 1);
+
+	var m2 = m.add();
+
+	assert.equal(m2, m, 'Return self');
+	assert.deepEqual(m, [0, 1, 2], 'Integer default');
+
+	assert.deepEqual((new MathArray(0, 1.2)).add(), [1, 2.2], 'Float default');
+	assert.deepEqual((new MathArray(0, 1.2)).add(1.2), [1.2, 2.4], 'Float');
+});
+
 test('call', function(assert) {
 	var m = new MathArray(-1, 0, 1);
 
@@ -47,6 +59,18 @@ test('clone', function(assert) {
 	assert.deepEqual(m2, [-1, 0, 1], 'Exact clone');
 });
 
+test('divide', function(assert) {
+	var m = new MathArray(-100, 0, 100);
+
+	var m2 = m.divide();
+
+	assert.equal(m2, m, 'Return self');
+	assert.deepEqual(m, [-1, 0, 1], 'Integer default');
+
+	assert.deepEqual((new MathArray(-1234, 0, 1234)).divide(), [-12.34, 0, 12.34], 'Float default');
+	assert.deepEqual((new MathArray(-1234, 0, 1234)).divide(2), [-617, 0, 617], 'Float');
+});
+
 test('floor', function(assert) {
 	var m = new MathArray(-0.5, 0, 0.1, 0.5, 0.9, 1);
 
@@ -70,18 +94,6 @@ test('last', function(assert) {
 
 	assert.deepEqual(m.last(), 2, 'Operation');
 	assert.deepEqual(m, [0, 1, 2], 'Unchanged');
-});
-
-test('map', function(assert) {
-	var m = new MathArray(-1, 0, 1);
-
-	var m2 = m.map(function(value, index) {
-		return this + value + index;
-	}, 5);
-
-	assert.notEqual(m2, m, 'Return self');
-	assert.deepEqual(m, [-1, 0, 1], 'Unchanged');
-	assert.deepEqual(m2, [5+-1+0, 5+0+1, 5+1+2], 'Operation');
 });
 
 test('max', function(assert) {
@@ -160,23 +172,6 @@ test('range', function(assert) {
 	assert.deepEqual(m.range(3, 3, 1), [3], 'Zero range');
 });
 
-test('reduce', function(assert) {
-	var m = new MathArray(-1, 0, 1);
-
-	var v = m.reduce(function(previous, value, index) {
-		return previous + value + index;
-	}, 5);
-
-	assert.deepEqual(m, [-1, 0, 1], 'Unchanged with intial');
-	assert.deepEqual(v, 5+0+3, 'Operation with intial');
-
-	v = m.reduce(function(previous, value, index) {
-		return previous + value + index;
-	});
-	assert.deepEqual(m, [-1, 0, 1], 'Unchanged without initial');
-	assert.deepEqual(v, 0+0+3, 'Operation without initial');
-});
-
 test('round', function(assert) {
 	var m = new MathArray(-0.5, 0, 0.1, 0.5, 0.9, 1);
 
@@ -186,19 +181,13 @@ test('round', function(assert) {
 	assert.deepEqual(m, [0, 0, 0, 1, 1, 1], 'Operation');
 });
 
-test('sort', function(assert) {
-	var m = new MathArray(5, 1, 3, 4, 2);
+test('sqrt', function(assert) {
+	var m = new MathArray(0, 1, 25, 110.25);
 
-	var m2 = m.sort();
+	var m2 = m.sqrt();
 
 	assert.equal(m2, m, 'Return self');
-	assert.deepEqual(m, [1, 2, 3, 4, 5], 'Operation');
-
-	assert.deepEqual((new MathArray()).sort(), [], 'Empty');
-	assert.deepEqual((new MathArray(1)).sort(), [1], 'Single');
-	assert.deepEqual((new MathArray(1, 3, 1)).sort(), [1, 1, 3], 'Duplicate values');
-	assert.deepEqual((new MathArray(1.2, 1.4, 1.3)).sort(), [1.2, 1.3, 1.4], 'Float');
-	assert.deepEqual((new MathArray(0, 1, -1)).sort(), [-1, 0, 1], 'Negative');
+	assert.deepEqual(m, [0, 1, 5, 10.5], 'Operation');
 });
 
 test('stddev', function(assert) {
@@ -207,6 +196,18 @@ test('stddev', function(assert) {
 	assert.equal((new MathArray(1, 2, 3)).stddev().toFixed(10), '0.8164965809', 'Integer');
 	assert.equal((new MathArray(1.2, 1.4, 1.3)).stddev().toFixed(10), '0.0816496581', 'Float');
 	assert.equal((new MathArray(0, 1, -1)).stddev().toFixed(10), '0.8164965809', 'Negative');
+});
+
+test('subtract', function(assert) {
+	var m = new MathArray(-1, 0, 1);
+
+	var m2 = m.subtract();
+
+	assert.equal(m2, m, 'Return self');
+	assert.deepEqual(m, [-2, -1, 0], 'Integer default');
+
+	assert.deepEqual((new MathArray(0)).subtract(), [-1], 'Float default');
+	assert.deepEqual((new MathArray(0)).subtract(1.2), [-1.2], 'Float');
 });
 
 test('sum', function(assert) {
