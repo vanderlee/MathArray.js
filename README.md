@@ -1,6 +1,8 @@
 MathArray.js
 ============
-Version 0.1
+Version 0.1.0
+
+[![Build Status](https://travis-ci.org/vanderlee/MathArray.js.svg?branch=master)](https://travis-ci.org/vanderlee/MathArray.js)
 
 Copyright (c) 2015 Martijn W. van der Lee
 
