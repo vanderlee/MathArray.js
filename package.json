@@ -1,0 +1,31 @@
+{
+	"name": "MathArray.js",
+	"version": "0.1.0",
+	"license": "MIT",
+	"description": "An Array-inherited object with math and statistics functions.",
+	"homepage": "https://github.com/vanderlee/MathArray.js",
+	"author": "Martijn van der Lee <martijn@vanderlee.com>",
+	"keywords": [
+		"javascript",
+		"math",
+		"statistics",
+		"stats",
+		"array"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/vanderlee/MathArray.js.git"
+	},
+	"bugs": {
+		"url": "https://github.com/vanderlee/MathArray.js/issues"
+	},
+	"main": "matharray.js",
+	"dependencies": {
+	},
+	"scripts": {
+		"test": "node --harmony ./test/testrunner.js"
+	},
+	"devDependencies": {
+		"qunit": ""
+	}
+}

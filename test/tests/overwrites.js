@@ -1,7 +1,7 @@
 /*jslint devel: true, bitwise: true, regexp: true, browser: true, confusion: true, unparam: true, eqeq: true, white: true, nomen: true, plusplus: true, maxerr: 50, indent: 4 */
 /*global QUnit,MathArray*/
 
-module('overwrites');
+QUnit.module('overwrites');
 
 test('map', function(assert) {
 	var m = new MathArray(-1, 0, 1);

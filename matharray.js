@@ -6,7 +6,7 @@
  * Released under the MIT license (https://opensource.org/licenses/MIT)
  */
 
-function MathArray() {
+MathArray = function() {
 	"use strict";
 
 	var construct = (function() {

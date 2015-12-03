@@ -1,9 +1,14 @@
 /*jslint devel: true, bitwise: true, regexp: true, browser: true, confusion: true, unparam: true, eqeq: true, white: true, nomen: true, plusplus: true, maxerr: 50, indent: 4 */
 /*global QUnit,MathArray*/
 
-module('inherited');
+QUnit.module('inherited');
 
-test('every', function(assert) {
+QUnit.test('qunit', function(assert) {
+	assert.equal(2, 2, "obviously false");
+});
+
+
+QUnit.test('every', function(assert) {
 	var m = new MathArray(-1, 0, 1);
 
 	var r = m.every(function(v) {
@@ -22,7 +27,7 @@ test('every', function(assert) {
 	}), true, 'All match');
 });
 
-test('indexOf', function(assert) {
+QUnit.test('indexOf', function(assert) {
 	var m = new MathArray(1, 2, 3, 2);
 
 	var r = m.indexOf(2);
@@ -37,7 +42,7 @@ test('indexOf', function(assert) {
 	assert.equal(m.indexOf(4), -1, 'Not found');
 });
 
-test('join', function(assert) {
+QUnit.test('join', function(assert) {
 	var m = new MathArray(-1, 0, 1);
 
 	var r = m.join();
@@ -49,7 +54,7 @@ test('join', function(assert) {
 	assert.equal(m.join(' and '), '-1 and 0 and 1', 'Long separator');
 });
 
-test('reverse', function(assert) {
+QUnit.test('reverse', function(assert) {
 	var m = new MathArray(-1, 0, 1);
 
 	var m2 = m.reverse();
@@ -58,7 +63,7 @@ test('reverse', function(assert) {
 	assert.deepEqual(m, [1, 0, -1], 'Operation');
 });
 
-test('pop', function(assert) {
+QUnit.test('pop', function(assert) {
 	var m = new MathArray(0, 1, 2);
 
 	var v = m.pop();
@@ -68,7 +73,7 @@ test('pop', function(assert) {
 	assert.deepEqual(m, [0, 1], 'Operation');
 });
 
-test('push', function(assert) {
+QUnit.test('push', function(assert) {
 	var m = new MathArray(0);
 
 	var l = m.push(1, 2);
@@ -78,7 +83,7 @@ test('push', function(assert) {
 	assert.deepEqual(m, [0, 1, 2], 'Operation');
 });
 
-test('shift', function(assert) {
+QUnit.test('shift', function(assert) {
 	var m = new MathArray(0, 1, 2);
 
 	var v = m.shift();
@@ -88,7 +93,7 @@ test('shift', function(assert) {
 	assert.deepEqual(m, [1, 2], 'Operation');
 });
 
-test('some', function(assert) {
+QUnit.test('some', function(assert) {
 	var m = new MathArray(-1, 0, 1);
 
 	var r = m.some(function(v) {
@@ -107,7 +112,7 @@ test('some', function(assert) {
 	}), true, 'All match');
 });
 
-test('toString', function(assert) {
+QUnit.test('toString', function(assert) {
 	var m = new MathArray(-1, 0, 1);
 
 	var r = m.toString();
@@ -118,7 +123,7 @@ test('toString', function(assert) {
 	assert.equal('test' + m, 'test-1,0,1', 'Automatic');
 });
 
-test('unshift', function(assert) {
+QUnit.test('unshift', function(assert) {
 	var m = new MathArray(0);
 
 	var l = m.unshift(1, 2);
