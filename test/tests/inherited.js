@@ -54,6 +54,23 @@ QUnit.test('join', function(assert) {
 	assert.equal(m.join(' and '), '-1 and 0 and 1', 'Long separator');
 });
 
+
+QUnit.test('lastIndexOf', function(assert) {
+	var m = new MathArray(1, 2, 3, 2);
+
+	var r = m.lastIndexOf(2);
+
+	assert.equal(r, 3, 'Return value');
+	assert.ok(m instanceof MathArray, 'MathArray', 'Is a MathArray');
+
+	assert.equal(m.lastIndexOf(2, 0), -1, 'From zero');
+	assert.equal(m.lastIndexOf(2, 1), 1, 'From first');
+	assert.equal(m.lastIndexOf(2, 2), 1, 'From second');
+	assert.equal(m.lastIndexOf(2, 3), 3, 'From last');
+	assert.equal(m.lastIndexOf(2, 4), 3, 'Beyond last');
+	assert.equal(m.lastIndexOf(4), -1, 'Not found');
+});
+
 QUnit.test('reverse', function(assert) {
 	var m = new MathArray(-1, 0, 1);
 

@@ -1,6 +1,6 @@
 MathArray.js
 ============
-Version 0.1.0
+Version 0.2.0
 
 [![Build Status](https://travis-ci.org/vanderlee/MathArray.js.svg?branch=master)](https://travis-ci.org/vanderlee/MathArray.js)
 
@@ -37,17 +37,6 @@ Returns self.
 Add the specified amount to all items (default `1` if not specified).
 
 Returns self.
-
-## `call(callback[, argument])`
-Calls a `callback` function on each item, not changing it.
-
-Callback signature is `void function(item, index)`.
-
-If `argument` is supplied, it will be passed to the callback as `this`.
-
-Returns self.
-
-See `map()` and `walk()` for similar functions.
 
 ## `ceil()`
 Round all numbers up to the nearest integer.
@@ -101,8 +90,19 @@ Returns an Array object containing the mode(s).
 
 Returns empty Array object if array is empty.
 
+## `modulo([divider = 100])`
+Return the remainder of a division by the specified divider (default `100` if
+not specified).
+
+Returns self.
+
 ## `multiply([factor = 100])`
 Multiply all items by the specified factor (default `100` if not specified).
+
+Returns self.
+
+## `power([power = 100])`
+Raise all items to the specified power (default `2` if not specified).
 
 Returns self.
 
@@ -133,6 +133,12 @@ Values exactly in the middle (like 0.5) will be rounded up.
 
 Returns self.
 
+## `sigma()`
+Changes all items to the number of population standard deviations they differ
+from the mean average. Items that are below average will be negative.
+
+Returns self.
+
 ## `sqrt()`
 Take the square root of every item.
 
@@ -149,10 +155,14 @@ Returns self.
 ## `sum()`
 Returns the sum of all values.
 
+## `toArray()`
+Returns an Array of all the elements of the MathArray.
+
 ## `variance()`
 Returns the population variance.
 
 ## `walk(callback[, argument])`
+
 Calls a `callback` function on each item, replacing the item values with the
 values returned by the callback function.
 
@@ -162,7 +172,7 @@ If `argument` is supplied, it will be passed to the callback as `this`.
 
 Returns self.
 
-See `call()` and `map()` for similar functions.
+See `forEach()` and `map()` for similar functions.
 
 Array operations
 ----------------
@@ -172,6 +182,7 @@ MathArray.
 *	`every(callback[, argument])`
 *	`indexOf(searchElement[, fromIndex = 0])`
 *	`join([separator = ','])`
+*	`lastIndexOf(searchElement[, fromIndex = length - 1])`
 *	`reverse()`
 *	`pop()`
 *	`push(element1[, ..., elementN])`
@@ -183,6 +194,9 @@ MathArray.
 A number of Array methods have been overwritten to use and return MathArray
 objects instead of Array objects. These are otherwise identical.
 
+*	`concat(value1[, value2[, ...[, valueN]]])`
+*	`filter(callback[, thisArg])`
+*	`forEach(callback[, thisArg])`
 *	`map(callback[, argument])`
 *	`reduce(callback[, initialValue])`
 *	`slice(begin[, end])`
@@ -211,12 +225,15 @@ Take a look at the include unittests for more examples.
 
 Future
 ------
-*	Core Array methods: concat, filter, find, forEach,
-	lastIndexOf, reduceRight
-*	toArray()
-*	pow, mod
-*	sigma, stddev_sample, variance_sample, sigma_sample
+*	Core Array methods: reduceRight
+*	Non-prototype array: from, isArray, observe, of
+*	Experimental Array methods: fill
+*	stddev_sample, variance_sample, sigma_sample
+*	covariance, pierson's r
 *	ceil(digits), floor(digits), round(digits)
 *	round(fractionals)
 *	roundin(digits), roundout(digits)
+*	Math ops with arrays
+*	Matrix support
+*	Bignumber support
 *	Aliasses

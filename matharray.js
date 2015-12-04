@@ -40,26 +40,6 @@ MathArray = function() {
 				return this;
 			},
 
-			call: function(callback, thisArg) {
-				if (typeof callback !== 'function') {
-					throw new TypeError(callback + ' is not a function');
-				}
-
-				var O = Object(this),
-					len = O.length >>> 0,
-					T = arguments.length > 1 ? thisArg : undefined,
-					k = 0;
-
-				while (k < len) {
-					if (k in O) {
-						callback.call(T, O[k], k, O);
-					}
-					++k;
-				}
-
-				return this;
-			},
-
 			ceil: function() {
 				return this.walk(Math.ceil);
 			},
@@ -80,6 +60,10 @@ MathArray = function() {
 				return A;
 			},
 
+			concat: function() {
+				return construct(Array.prototype.concat.apply(this, arguments));
+			},
+
 			divide: function(factor) {
 				factor = factor || 100;
 
@@ -90,14 +74,64 @@ MathArray = function() {
 				return this;
 			},
 
+			filter: function(callback, thisArg) {
+				if (this === null || typeof this === 'undefined') {
+					throw new TypeError(' this is null or not defined');
+				}
+
+				if (typeof callback !== 'function') {
+					throw new TypeError(callback + ' is not a function');
+				}
+
+				var O = Object(this),
+					len = O.length >>> 0,
+					T = arguments.length > 1 ? thisArg : undefined,
+					A = new MathArray(),
+					k = 0,
+					kValue,
+					mappedValue;
+
+				while (k < len) {
+					if (k in O) {
+						kValue = O[k];
+						if (callback.call(T, kValue, k, O) === true) {
+							A.push(kValue);
+						}
+					}
+					++k;
+				}
+
+				return A;
+			},
+
 			floor: function() {
 				return this.walk(Math.floor);
+			},
+
+			forEach: function(callback, thisArg) {
+				if (typeof callback !== 'function') {
+					throw new TypeError(callback + ' is not a function');
+				}
+
+				var O = Object(this),
+					len = O.length >>> 0,
+					T = arguments.length > 1 ? thisArg : undefined,
+					k = 0;
+
+				while (k < len) {
+					if (k in O) {
+						callback.call(T, O[k], k, O);
+					}
+					++k;
+				}
+
+				return this;
 			},
 
 			histogram: function() {
 				var tallies = {};
 
-				this.call(function(v) {
+				this.forEach(function(v) {
 					if (tallies[v]) {
 						++tallies[v];
 					} else {
@@ -190,11 +224,31 @@ MathArray = function() {
 				return modes;
 			},
 
+			modulo: function(divider) {
+				divider = divider || 100;
+
+				this.walk(function(v) {
+					return v % divider;
+				});
+
+				return this;
+			},
+
 			multiply: function(factor) {
 				factor = factor || 100;
 
 				this.walk(function(v) {
 					return v * factor;
+				});
+
+				return this;
+			},
+
+			power: function(power) {
+				power = power || 2;
+
+				this.walk(function(v) {
+					return Math.pow(v, power);
 				});
 
 				return this;
@@ -288,6 +342,24 @@ MathArray = function() {
 				return this.walk(Math.round);
 			},
 
+			sigma: function() {
+				var stddev = this.stddev(),
+					mean;
+
+				if (stddev == 0) {
+					this.walk(function() {
+						return 0;
+					})
+				} else {
+					mean = this.mean();
+					this.walk(function(v) {
+						return (v - mean) / stddev;
+					});
+				}
+
+				return this;
+			},
+
 			slice: function(begin, end) {
 				return construct(Array.prototype.slice.apply(this, arguments));
 			},
@@ -330,6 +402,10 @@ MathArray = function() {
 				}, 0);
 			},
 
+			toArray: function() {
+				return Array.prototype.slice.call(this, 0);
+			},
+
 			variance: function() {
 				if (this.length === 0) {
 					return 0;
@@ -339,7 +415,7 @@ MathArray = function() {
 					sum = 0,
 					diff;
 
-				this.call(function(v) {
+				this.forEach(function(v) {
 					diff = v - mean;
 					sum += diff * diff;
 				});

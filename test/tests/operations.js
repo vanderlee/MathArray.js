@@ -26,18 +26,15 @@ test('add', function(assert) {
 	assert.deepEqual((new MathArray(0, 1.2)).add(1.2), [1.2, 2.4], 'Float');
 });
 
-test('call', function(assert) {
+test('walk', function(assert) {
 	var m = new MathArray(-1, 0, 1);
 
-	var sum = 0;
-	var m2 = m.call(function(value, index) {
-		sum += this + value + index;
-		return 99; // ignored
-	}, 5);
+	var m2 = m.walk(function(value, index) {
+		return value + 3;
+	});
 
 	assert.equal(m2, m, 'Return self');
-	assert.equal(sum, 15+0+3, 'Call result');
-	assert.deepEqual(m, [-1, 0, 1], 'Unchanged');
+	assert.deepEqual(m, [2, 3, 4], 'Unchanged');
 });
 
 test('ceil', function(assert) {
@@ -130,6 +127,17 @@ test('modes', function(assert) {
 	assert.deepEqual((new MathArray(1, 1, 2, 3, 4, 5, 5)).modes(), [1, 5], 'Bimodal');
 });
 
+test('modulo', function(assert) {
+	var m = new MathArray(-123, 0, 123);
+
+	var m2 = m.modulo();
+
+	assert.equal(m2, m, 'Return self');
+	assert.deepEqual(m, [-23, 0, 23], 'Integer default');
+
+	assert.deepEqual((new MathArray(-1.125, 0, 1.125)).modulo(1), [-0.125, 0, 0.125], 'Float');
+});
+
 test('multiply', function(assert) {
 	var m = new MathArray(-1, 0, 1);
 
@@ -140,6 +148,19 @@ test('multiply', function(assert) {
 
 	assert.deepEqual((new MathArray(-1.234, 0, 1.234)).multiply(), [-123.4, 0, 123.4], 'Float default');
 	assert.deepEqual((new MathArray(-1.234, 0, 1.234)).multiply(2), [-2.468, 0, 2.468], 'Float');
+});
+
+test('power', function(assert) {
+	var m = new MathArray(-2, 0, 1, 2, 3);
+
+	var m2 = m.power();
+
+	assert.equal(m2, m, 'Return self');
+	assert.deepEqual(m, [4, 0, 1, 4, 9], 'Integer default');
+
+	assert.ok(Number.isNaN((new MathArray(-4)).power(0.5)[0]), 'Negative integer ^ half');
+	assert.deepEqual((new MathArray(0, 4)).power(0.5), [0, 2], 'Integer ^ float');
+	assert.deepEqual((new MathArray(0, 2.5)).power(), [0, 6.25], 'Float');
 });
 
 test('randoms', function(assert) {
@@ -181,6 +202,17 @@ test('round', function(assert) {
 	assert.deepEqual(m, [0, 0, 0, 1, 1, 1], 'Operation');
 });
 
+test('sigma', function(assert) {
+	console.log((new MathArray()).sigma());
+
+	assert.deepEqual((new MathArray()).sigma(), [], 'Empty');
+	assert.deepEqual((new MathArray(1)).sigma(), [0], 'Single');
+	assert.deepEqual((new MathArray(1, 1, 1)).sigma(), [0, 0, 0], 'Single');
+	assert.equal((new MathArray(1, 2, 3)).sigma()[0].toFixed(4), "-1.2247", 'Integer');
+	assert.equal((new MathArray(11, 22, 33)).sigma()[0].toFixed(4), "-1.2247", 'Integer');
+	assert.equal((new MathArray(1.11, 2.22, 3.33)).sigma()[0].toFixed(4), "-1.2247", 'Integer');
+});
+
 test('sqrt', function(assert) {
 	var m = new MathArray(0, 1, 25, 110.25);
 
@@ -191,6 +223,10 @@ test('sqrt', function(assert) {
 });
 
 test('stddev', function(assert) {
+	var m = new MathArray(1);
+	m.stddev();
+	assert.deepEqual(m, [1], 'Unchanged');
+
 	assert.equal((new MathArray()).stddev(), 0, 'Empty');
 	assert.equal((new MathArray(1)).stddev(), 0, 'Single');
 	assert.equal((new MathArray(1, 2, 3)).stddev().toFixed(10), '0.8164965809', 'Integer');
@@ -218,7 +254,21 @@ test('sum', function(assert) {
 	assert.equal((new MathArray(0, 1, -1)).sum(), 0, 'Negative');
 });
 
+test('toArray', function(assert) {
+	var m = new MathArray();
+
+	assert.ok((new MathArray()).toArray() instanceof Array, 'Is not a MathArray');
+	assert.notOk((new MathArray()).toArray().toArray, 'Is not a MathArray');
+	assert.deepEqual((new MathArray()).toArray(), [], 'Empty');
+	assert.deepEqual((new MathArray(1)).toArray(), [1], 'Single');
+	assert.deepEqual((new MathArray(1, 2, 3)).toArray(), [1, 2, 3], 'Single');
+});
+
 test('variance', function(assert) {
+	var m = new MathArray(1);
+	m.variance();
+	assert.deepEqual(m, [1], 'Unchanged');
+
 	assert.equal((new MathArray()).variance(), 0, 'Empty');
 	assert.equal((new MathArray(1)).variance(), 0, 'Single');
 	assert.equal((new MathArray(1,2,3)).variance().toFixed(10), '0.6666666667', 'Integer');
