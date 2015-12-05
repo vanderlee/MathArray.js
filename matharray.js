@@ -319,7 +319,7 @@ MathArray = function() {
 					k = 0,
 					value;
 
-				if (arguments.length === 2) {
+				if (arguments.length >= 2) {
 					value = arguments[1];
 				} else {
 					while (k < len && !(k in t)) {
@@ -330,11 +330,47 @@ MathArray = function() {
 					}
 					value = t[k++];
 				}
+
 				for (; k < len; k++) {
 					if (k in t) {
 						value = callback(value, t[k], k, t);
 					}
 				}
+
+				return value;
+			},
+
+			reduceRight: function(callback /*, initialValue*/) {
+				if (null === this || 'undefined' === typeof this) {
+					throw new TypeError('Array.prototype.reduceRight called on null or undefined' );
+				}
+				if ('function' !== typeof callback) {
+					throw new TypeError(callback + ' is not a function');
+				}
+
+				var t = Object(this),
+					len = t.length >>> 0,
+					k = len - 1,
+					value;
+
+				if (arguments.length >= 2) {
+					value = arguments[1];
+				} else {
+					while (k >= 0 && !(k in t)) {
+						k--;
+					}
+					if (k < 0) {
+						throw new TypeError('Reduce of empty array with no initial value');
+					}
+					value = t[k--];
+				}
+
+				for (; k >= 0; k--) {
+					if (k in t) {
+						value = callback(value, t[k], k, t);
+					}
+				}
+
 				return value;
 			},
 

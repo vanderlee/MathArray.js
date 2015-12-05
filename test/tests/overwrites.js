@@ -72,6 +72,37 @@ test('reduce', function(assert) {
 
 	assert.deepEqual(m, [-1, 0, 1], 'Unchanged without initial');
 	assert.deepEqual(v, 0+0+3, 'Operation without initial');
+
+	v = (new MathArray(3, 5, 7)).reduce(function(previous, value) {
+		return (previous * 2) + value;
+	}, 2);
+
+	assert.equal(v, 45, 'Left to right');
+});
+
+test('reduceRight', function(assert) {
+	var m = new MathArray(-1, 0, 1);
+
+	var v = m.reduceRight(function(previous, value, index) {
+		return previous + value + index;
+	}, 5);
+
+	assert.ok(m instanceof MathArray, 'Is a MathArray');
+	assert.deepEqual(m, [-1, 0, 1], 'Unchanged with intial');
+	assert.deepEqual(v, 5+0+3, 'Operation with intial');
+
+	v = m.reduceRight(function(previous, value, index) {
+		return previous + value + index;
+	});
+
+	assert.deepEqual(m, [-1, 0, 1], 'Unchanged without initial');
+	assert.deepEqual(v, 1+1-1, 'Operation without initial');
+
+	v = (new MathArray(3, 5, 7)).reduceRight(function(previous, value) {
+		return (previous * 2) + value;
+	}, 2);
+
+	assert.equal(v, 57, 'Right to left');
 });
 
 test('slice', function(assert) {

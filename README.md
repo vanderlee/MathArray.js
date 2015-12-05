@@ -1,6 +1,6 @@
 MathArray.js
 ============
-Version 0.2.0
+Version 0.2.1
 
 [![Build Status](https://travis-ci.org/vanderlee/MathArray.js.svg?branch=master)](https://travis-ci.org/vanderlee/MathArray.js)
 
@@ -199,6 +199,7 @@ objects instead of Array objects. These are otherwise identical.
 *	`forEach(callback[, thisArg])`
 *	`map(callback[, argument])`
 *	`reduce(callback[, initialValue])`
+*	`reduceRight(callback[, initialValue])`
 *	`slice(begin[, end])`
 *	`sort()` Sorts numerically.
 *	`splice(start, deleteCount[, item1[, item2[, ...]]])`
@@ -225,7 +226,6 @@ Take a look at the include unittests for more examples.
 
 Future
 ------
-*	Core Array methods: reduceRight
 *	Non-prototype array: from, isArray, observe, of
 *	Experimental Array methods: fill
 *	stddev_sample, variance_sample, sigma_sample
