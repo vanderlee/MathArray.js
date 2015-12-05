@@ -225,9 +225,8 @@ Using chaining, you can shorten this somewhat:
 
 Take a look at the include unittests for more examples.
 
-Future
-------
-*	Non-prototype array: from, isArray, observe, of
+To do
+-----
 *	Experimental Array methods: fill
 *	stddev_sample, variance_sample, sigma_sample
 *	covariance, pierson's r
