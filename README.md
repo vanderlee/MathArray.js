@@ -1,6 +1,6 @@
 MathArray.js
 ============
-Version 0.2.1
+Version 0.2.2
 
 [![Build Status](https://travis-ci.org/vanderlee/MathArray.js.svg?branch=master)](https://travis-ci.org/vanderlee/MathArray.js)
 
@@ -181,6 +181,7 @@ MathArray.
 
 *	`every(callback[, argument])`
 *	`indexOf(searchElement[, fromIndex = 0])`
+*	`isArray(obj)`
 *	`join([separator = ','])`
 *	`lastIndexOf(searchElement[, fromIndex = length - 1])`
 *	`reverse()`

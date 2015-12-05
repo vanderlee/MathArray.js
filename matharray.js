@@ -509,3 +509,4 @@ MathArray = function() {
 if (MathArray.__proto__) {
 	MathArray.prototype = [];
 }
+MathArray.isArray = Array.isArray;

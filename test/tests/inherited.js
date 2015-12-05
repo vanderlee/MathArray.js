@@ -27,6 +27,13 @@ QUnit.test('every', function(assert) {
 	}), true, 'All match');
 });
 
+QUnit.test('isArray', function(assert) {
+	assert.ok(MathArray.isArray([]), 'MathArray.isArray(Array)');
+	assert.ok(MathArray.isArray(new MathArray()), 'MathArray.isArray(MathArray)');
+	assert.notOk(MathArray.isArray(1), 'MathArray.isArray(1)');
+	assert.notOk(MathArray.isArray({}), 'MathArray.isArray(Object)');
+});
+
 QUnit.test('indexOf', function(assert) {
 	var m = new MathArray(1, 2, 3, 2);
 
