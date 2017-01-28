@@ -1,5 +1,5 @@
 {
-	"name": "MathArray.js",
+	"name": "matharray.js",
 	"version": "0.2.2",
 	"license": "MIT",
 	"description": "An Array-inherited object with math and statistics functions.",
